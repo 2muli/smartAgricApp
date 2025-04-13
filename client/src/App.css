@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: aquamarine;
+}
+
+@keyframes slide {
+  0% {
+    background-position: 0 0; /* Start at the beginning of the image */
+  }
+  100% {
+    background-position: -100% 0; /* Move the image one full width to the left */
+  }
+}
+
+/* Ensure the entire viewport is covered */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; /* Full height of the viewport */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  body {
+    background-size: cover; /* Ensure it covers the entire viewport */
+    animation: slide 10s linear infinite; /* Keep animation continuous on mobile */
+  }
+  .about-container2 {
+    width: 100%; /* Make it take full width */
+    padding: 10px; /* Adjust padding for smaller screens */
+    min-height: 100vh; /* Ensure background extends to full height */
+  }
+  .about-section1 {
+    width: 95%; /* Adjust width for better fit on mobile */
+    padding: 15px;
+  }
+  .about-container2 h1, 
+  .about-container2 h2, 
+  .about-container2 h3, 
+  .about-container2 p {
+    text-align: center; /* Ensure all text is centered */
+  }
+}
