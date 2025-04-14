@@ -8,7 +8,7 @@ const WeatherForecast = () => {
   const [error, setError] = useState(""); 
   const [suggestions, setSuggestions] = useState([]);
 
-  const apiKey = "0986e34b38804094862201644251004"; 
+  const apiKey = process.env.REACT_APP_WEATHER_KEY; 
 
   // Fetch weather data based on location
   const fetchWeather = async (location) => {
