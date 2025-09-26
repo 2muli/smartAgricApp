@@ -34,7 +34,7 @@ export const getMyLivestock = (req, res) => {
     }
 
     const user_id = req.user.id;
-    const q = "SELECT * FROM livestock WHERE farmerId = ? ORDER BY type";
+    const q = "SELECT * FROM livestock WHERE farmerId = ? ORDER BY type ASC";
 
     db.query(q, [user_id], (err, result) => {
         if (err) {

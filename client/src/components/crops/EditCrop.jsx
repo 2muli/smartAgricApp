@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // Fetch crop by ID
 const fetchCropById = async (id) => {
@@ -53,12 +54,12 @@ const EditCrop = () => {
   const { mutate: updateCropMutation, isLoading: isUpdating } = useMutation({
     mutationFn: updateCrop,
     onSuccess: () => {
-      alert("Crop updated successfully!");
+      toast.success("Crop updated successfully!");
       navigate("/crops");
     },
     onError: (error) => {
       console.error("Update failed:", error);
-      alert("Failed to update crop.");
+      toast.error("Failed to update crop.");
     },
   });
 

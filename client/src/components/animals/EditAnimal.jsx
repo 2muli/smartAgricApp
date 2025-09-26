@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // Fetch animal by ID
 const fetchAnimalById = async (id) => {
@@ -57,12 +58,12 @@ const EditAnimal = () => {
   const { mutate: updateAnimalMutation, isLoading: isUpdating } = useMutation({
     mutationFn: updateAnimal,
     onSuccess: () => {
-      alert("Animal updated successfully!");
+      toast.success("Animal updated successfully!");
       navigate("/animals");
     },
     onError: (error) => {
       console.error("Error updating animal:", error);
-      alert("Failed to update animal.");
+      toast.error("Failed to update animal.");
     },
   });
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import "./login.css";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [inputs, setInputs] = useState({ contact: "", password: "" });
@@ -24,8 +25,10 @@ const Login = () => {
     try {
       await login(inputs);
      navigate("/welcome")
+     toast.success("Login successful!");
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   };
 

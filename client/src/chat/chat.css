@@ -1,0 +1,156 @@
+.chat {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+.chat i {
+    font-size: 30px;
+    color: black;
+}
+  .tooltip-text {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 10;
+    bottom: 40px; /* position above icon */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+  }
+  
+  .chat:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* For chat message */
+  .app-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;   /* ✅ limits size but still responsive */
+    margin: auto;
+    padding: 16px;
+    border: 1px solid hsl(0, 56%, 4%);
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    height: 85vh;
+    background: white;
+    justify-content: center;
+    text-align: center;
+    color: black;
+    right: 0;
+    margin-bottom: 0px;
+  }
+  .close-btn{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .close-btn:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+  .app-title {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0px;
+    color: black;
+  }
+  
+  .chat-box {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background: #f9fdf9; /* ✅ fresh mint background */
+    min-height: 300px;
+    max-height: 60vh;
+    scrollbar-gutter: stable; /* ✅ prevents width shift */
+  }
+  
+  .message {
+    margin: 6px 0;
+    padding: 8px;
+    border-radius: 8px;
+    max-width: 70%;
+    word-wrap: break-word;
+  }
+  
+  .message.user {
+    background-color: darkslategray;
+    margin-left: auto;
+    text-align: right;
+    color: white;
+    border-radius: 12px;
+  }
+  
+  .message.bot {
+    background-color: #e0e0e0;
+    margin-right: auto;
+    text-align: left;
+  }
+  
+  .chat-input {
+    border-radius: 12px !important;
+    width: 100%; /* ✅ keep stable */
+  }
+  
+  /* 🌍 Responsive styles */
+  @media (max-width: 768px) {
+    .app-container {
+      max-width: 100%; /* ✅ avoid overflow */
+      height: 100vh;
+      border-radius: 0;
+      padding: 10px;
+      margin: 0 auto;
+    }
+  
+    .chat-box {
+      font-size: 0.9rem;
+      padding: 6px;
+    }
+  
+    .app-title {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .app-container {
+      padding: 8px;
+      max-width: 100%; /* ✅ consistent */
+    }
+  
+    .chat-box {
+      font-size: 0.85rem;
+      padding: 6px;
+      margin-bottom: 10px;
+    }
+  
+    .message {
+      font-size: 0.85rem;
+      padding: 6px;
+    }
+  
+    .chat-input {
+      font-size: 0.9rem !important;
+      padding: 6px;
+      width: 100%; /* ✅ stable width */
+    }
+  }
+  

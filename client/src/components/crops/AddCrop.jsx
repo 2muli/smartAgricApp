@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 const AddCrop = () => {
   const { userDetails, logout } = useAuth(); // ✅ Get logged-in farmer details
@@ -35,11 +36,11 @@ const AddCrop = () => {
         { ...formData, farmer_id: userDetails.id }, // ✅ Attach Farmer ID
         { withCredentials: true }
       );
-      alert("Produce added successfully!");
+      toast.success("Produce added successfully!");
       navigate("/crops"); // Redirect back to the produce list
     } catch (error) {
       console.error("Failed to add produce:", error);
-      alert("Error adding produce.");
+      toast.error("Error adding produce.");
     }
   };
     return (

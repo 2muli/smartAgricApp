@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from "axios";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const fetchCrops = async () => {
   try {
@@ -37,11 +38,11 @@ const Crops = () => {
     mutationFn: deleteCrop,
     onSuccess: () => {
       queryClient.invalidateQueries(['crops']);
-      alert('Crop deleted successfully!');
+      toast.success('Crop deleted successfully!');
     },
     onError: (error) => {
       console.error('Error deleting crop:', error);
-      alert('Failed to delete crop.');
+      toast.error('Failed to delete crop.');
     },
   });
 

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 const AddAnimal = () => {
   const { userDetails, logout } = useAuth();
@@ -36,11 +37,11 @@ const AddAnimal = () => {
         { ...formData, farmerId: userDetails.id },
         { withCredentials: true }
       );
-      alert("Animal added successfully!");
+      toast.success("Animal added successfully!");
       navigate("/animals"); // Redirect to animal list
     } catch (error) {
       console.error("Error adding animal:", error);
-      alert("Failed to add animal.");
+      toast.error("Failed to add animal.");
     }
   };
 

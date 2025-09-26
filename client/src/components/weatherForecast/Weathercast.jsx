@@ -8,7 +8,7 @@ const WeatherForecast = () => {
   const [error, setError] = useState(""); 
   const [suggestions, setSuggestions] = useState([]);
 
-  const apiKey = process.env.REACT_APP_WEATHER_KEY; 
+  const apiKey = import.meta.env.VITE_APP_WEATHER_KEY; 
 
   // Fetch weather data based on location
   const fetchWeather = async (location) => {
@@ -27,8 +27,9 @@ const WeatherForecast = () => {
         const errorData = await response.json();
         throw new Error(errorData.error.message || "City not found");
       }
-
+     
       const data = await response.json();
+      console.log(data);
       setWeatherData(data);
     } catch (err) {
       setError(err.message);

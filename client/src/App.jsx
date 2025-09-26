@@ -31,12 +31,15 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./contexts/ProtectedRoute";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Chat from "./chat/Chat";
+import ChattingAISupport from "./chat/ChattingAISupport";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Layout>
+          <Chat/>
           <Routes>
             <Route path="*" element={<Error />} />
             <Route path="/" element={<Home />} />
@@ -46,12 +49,14 @@ function App() {
             <Route path="/help" element={<Help />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/chat" element={<ChattingAISupport/>}/>
 
             {/* ✅ PROTECTED ROUTES BELOW */}
             <Route path="/welcome" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
             <Route path="/addLivestock" element={<ProtectedRoute><AddAnimal /></ProtectedRoute>} />
             <Route path="/editLivestock/:id" element={<ProtectedRoute><EditAnimal /></ProtectedRoute>} />
             <Route path="/dashboard/:section" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/animals" element={<ProtectedRoute><Animal /></ProtectedRoute>} />
             <Route path="/crops" element={<ProtectedRoute><Crops /></ProtectedRoute>} />
             <Route path="/editCrop/:id" element={<ProtectedRoute><EditCrop /></ProtectedRoute>} />

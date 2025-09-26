@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-
+import { toast } from "react-toastify";
 const Navbar = () => {
   const { logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const Navbar = () => {
     try {
       await logout();
       navigate("/login"); // ✅ Ensures proper redirection
+      toast.warning("Logout successful!");
     } catch (error) {
       console.error("Logout error:", error);
     }
