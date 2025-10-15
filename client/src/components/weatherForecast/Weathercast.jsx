@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import "./weather.css";
 
 const WeatherForecast = () => {
-  const [location, setLocation] = useState(""); 
-  const [weatherData, setWeatherData] = useState(null); 
+  const [location, setLocation] = useState("");
+  const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  const apiKey = import.meta.env.VITE_APP_WEATHER_KEY; 
+  const apiKey = import.meta.env.VITE_APP_WEATHER_KEY;
 
-  // Fetch weather data based on location
+  // Fetch 5-day weather forecast
   const fetchWeather = async (location) => {
     if (!location) return;
 
@@ -20,16 +20,15 @@ const WeatherForecast = () => {
 
     try {
       const response = await fetch(
-        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`
+        `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=7&aqi=no&alerts=no`
       );
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error.message || "City not found");
       }
-     
+
       const data = await response.json();
-      console.log(data);
       setWeatherData(data);
     } catch (err) {
       setError(err.message);
@@ -37,8 +36,9 @@ const WeatherForecast = () => {
 
     setLoading(false);
   };
+  console.log(weatherData)
 
-  // Fetch location suggestions based on the user's input (using WeatherAPI)
+  // Fetch city suggestions as user types
   const fetchLocationSuggestions = async () => {
     if (!location) return;
 
@@ -53,34 +53,34 @@ const WeatherForecast = () => {
 
       const data = await response.json();
 
-      // Filter results to only show locations that start with the typed letters
       const filteredSuggestions = data.filter((city) =>
         city.name.toLowerCase().startsWith(location.toLowerCase())
       );
 
-      setSuggestions(filteredSuggestions); // Set the filtered suggestions list
+      setSuggestions(filteredSuggestions);
     } catch (err) {
       setError(err.message);
     }
   };
 
-  // Handle user typing
+  // Handle input change
   const handleInputChange = (e) => {
     const value = e.target.value;
     setLocation(value);
-    fetchLocationSuggestions(); // Fetch location suggestions as the user types
+    fetchLocationSuggestions();
   };
 
-  // Handle user selecting a location from the dropdown
+  // When user clicks on a suggestion
   const handleLocationSelect = (city) => {
-    setLocation(city.name); // Set the selected city in the input
-    fetchWeather(city.name); // Fetch weather for the selected city
-    setSuggestions([]); // Clear suggestions after selection
+    setLocation(city.name);
+    fetchWeather(city.name);
+    setSuggestions([]);
   };
 
   return (
-    <div className="weather-container">
-      <h2>Weather Forecast</h2>
+    <div className="weather-container" style={{minHeight:"50vh"}}>
+      <h2>Day Weather Forecast</h2>
+
       <div className="weather-search">
         <input
           type="text"
@@ -90,11 +90,10 @@ const WeatherForecast = () => {
         />
         <button onClick={() => fetchWeather(location)}>Check Weather</button>
 
-        {/* Display location suggestions as a dropdown */}
         {location && suggestions.length > 0 && (
-          <ul style={{cursor:"pointer",display: "block",fontWeight: "bold"}} className="suggestions-dropdown" >
+          <ul className="suggestions-dropdown">
             {suggestions.map((city) => (
-              <li key={city.id} onClick={() => handleLocationSelect(city)}>
+              <li key={`${city.name}-${city.country}`} onClick={() => handleLocationSelect(city)}>
                 {city.name}, {city.country}
               </li>
             ))}
@@ -110,18 +109,21 @@ const WeatherForecast = () => {
           <h3>
             {weatherData.location.name}, {weatherData.location.country}
           </h3>
-          <p>
-            <strong>Condition:</strong> {weatherData.current.condition.text}
-          </p>
-          <p>
-            <strong>Temperature:</strong> {weatherData.current.temp_c} °C
-          </p>
-          <p>
-            <strong>Humidity:</strong> {weatherData.current.humidity}%
-          </p>
-          <p>
-            <strong>Wind:</strong> {weatherData.current.wind_kph} km/h
-          </p>
+          <p><strong>Current Condition:</strong> {weatherData.current.condition.text}</p>
+          <p><strong>Temperature:</strong> {weatherData.current.temp_c} °C</p>
+
+          <h4>Forecast for 7 Days:</h4>
+          <div className="forecast-container">
+            {weatherData.forecast.forecastday.map((day) => (
+              <div key={day.date} className="forecast-day">
+                <p><strong>{day.date}</strong></p>
+                <img src={day.day.condition.icon} alt={day.day.condition.text} />
+                <p>{day.day.condition.text}</p>
+                <p>Max: {day.day.maxtemp_c} °C</p>
+                <p>Min: {day.day.mintemp_c} °C</p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

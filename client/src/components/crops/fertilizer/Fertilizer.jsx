@@ -36,7 +36,7 @@ const Fertilizer = () => {
 
 
   return (
-    <>
+    <div className="min-h-[calc(100vh-2rem)]">
       <div className="pagetitle">
         <h1>Animals</h1>
       </div>
@@ -76,7 +76,7 @@ const Fertilizer = () => {
           ))}
         </tbody>
       </table>
-      </>
+      </div>
   );
 };
 

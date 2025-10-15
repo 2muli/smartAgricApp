@@ -28,7 +28,7 @@ import "./tutorial.css";
       };
     
       return (
-        <div className="tutorials-container">
+        <div className="tutorials-container min-h-screen">
           <h2>Search Crop or Animal By Name</h2>
           <div className="search-bar">
             <input

@@ -80,7 +80,7 @@ const EditAnimal = () => {
   if (isError) return <p>Error fetching animal details.</p>;
 
   return (
-    <div className="details mx-auto p-3" style={{ width: "80vh", maxWidth: "100%" }}>
+    <div className="details mx-auto p-3 min-h-[calc(100vh-2rem)]" style={{ width: "80vh", maxWidth: "100%" }}>
       <h2 className="text-xl font-semibold mb-3">Edit Animal</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group mb-3">

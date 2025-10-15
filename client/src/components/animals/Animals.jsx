@@ -69,7 +69,7 @@ const Animals = () => {
   const currentRows = livestocks.slice(indexOfFirstRow, indexOfLastRow);
 
   return (
-    <>
+    <div className="min-h-[calc(100vh-2rem)]">
       <div className="pagetitle">
         <h1>Animals</h1>
       </div>
@@ -172,7 +172,7 @@ const Animals = () => {
           </ul>
         </nav>
       )}
-    </>
+    </div>
   );
 };
 

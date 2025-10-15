@@ -52,6 +52,7 @@ const AddAnimal = () => {
         width: "80vh",
         maxWidth: "100%",
         boxSizing: "border-box",
+        minHeight: "calc(100vh - 2rem)",
       }}
     >
       <h2 className="text-xl font-semibold mb-3">Add Animal</h2>

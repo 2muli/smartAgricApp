@@ -56,8 +56,8 @@ const Crops = () => {
   const currentRows = crops.slice(indexOfFirstRow, indexOfLastRow);
 
   return (
-    <>
-      <div className="pagetitle">
+    <div className="min-h-[calc(100vh-2rem)]">
+      <div className="page-title">
         <h1>Crops</h1>
       </div>
 
@@ -133,7 +133,7 @@ const Crops = () => {
           </ul>
         </nav>
       )}
-    </>
+    </div>
   );
 };
 

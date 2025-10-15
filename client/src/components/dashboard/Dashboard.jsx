@@ -1,12 +1,11 @@
 import { useParams } from "react-router-dom";
 import Sidebar from "./../sidebar/Sidebar";
-import "./dashboard.css"; // Optional styling
 
 const Dashboard = () => {
   const { section } = useParams(); // 'crops' or 'livestock'
 
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard-layout min-h-[calc(100vh-2rem)]">
       <Sidebar initialSection={section} />
       {/* You can place the main dashboard content here */}
       <div className="dashboard-content">

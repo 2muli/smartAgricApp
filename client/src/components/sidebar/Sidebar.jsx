@@ -1,127 +1,173 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext"; // Make sure this path is correct
+import { AuthContext } from "../../contexts/AuthContext";
+import {
+  Typography,
+  List,
+  ListItem,
+  ListItemPrefix,
+  Drawer,
+  Card,
+} from "@material-tailwind/react";
+import {
+  PresentationChartBarIcon,
+  HomeIcon,
+  BookOpenIcon,
+  ArrowLeftCircleIcon,
+  XMarkIcon,
+  PowerIcon
+} from "@heroicons/react/24/solid";
+import { toast } from "react-toastify";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout, isAuthenticated } = useContext(AuthContext);
 
   const [activeSection, setActiveSection] = useState("");
 
-  // Detect current route and set active section
   useEffect(() => {
     if (location.pathname.includes("crops")) {
       setActiveSection("crops");
     } else if (location.pathname.includes("livestock")) {
       setActiveSection("livestock");
     } else {
-      setActiveSection(""); // Reset if not in any known section
+      setActiveSection("");
     }
   }, [location]);
 
-  // Handle logout
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
       await logout();
       navigate("/login");
+      toast.warning("Logout successful!");
+      onClose(); // only close when explicitly logging out
     } catch (error) {
       console.error("Logout error:", error);
+      toast.error("Logout failed!");
     }
   };
 
-  // 🚫 Don't show sidebar if user isn't authenticated
-  if (!isAuthenticated) {
-    return null;
-  }
+  if (!isAuthenticated) return null;
 
   return (
-    <aside id="sidebar" className="sidebar">
-      <ul className="sidebar-nav" id="sidebar-nav">
-        <li className="nav-item">
-          <Link to="/dashboard" className="nav-link">
-          <i className="bi bi-house"></i>
-            <span>Dashboard</span>
+    // 👇 Important: disable outside click close
+    <Drawer open={isOpen} onClose={() => {}} overlay={false}>
+      <Card color="transparent" shadow={false} className="h-[calc(100vh-2rem)] p-16">
+        <List>
+          <Link to="/dashboard">
+            <ListItem>
+              <ListItemPrefix>
+                <PresentationChartBarIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Dashboard
+            </ListItem>
           </Link>
-        </li>
-        {activeSection === "crops" && (
-          <>
-            <li className="nav-item">
-              <Link to="/crops" className="nav-link">
-                <i className="bi bi-clipboard-data"></i>
-                <span>Crop Records</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/googletutorial" className="nav-link">
-                <i className="bi bi-journal-bookmark"></i>
-                <span>Crop Tutorials</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-          <Link to="/dashboard/livestock" className="nav-link">
-            <i className="bi bi-house-heart"></i>
-            <span>Animals</span>
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/welcome" className="nav-link">
-            <i className="bi bi-arrow-left-circle"></i>
-            <span>Back</span>
-          </Link>
-        </li>
-          </>
-        )}
 
-        {activeSection === "livestock" && (
-          <>
-            <li className="nav-item">
-              <Link to="/animals" className="nav-link">
-                <i className="bi bi-journal-medical"></i>
-                <span>Livestock Records</span>
+          {activeSection === "crops" && (
+            <>
+              <Link to="/crops">
+                <ListItem>
+                  <ListItemPrefix>
+                    <i className="bi bi-clipboard-data text-lg"></i>
+                  </ListItemPrefix>
+                  Crop Records
+                </ListItem>
               </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/googletutorial" className="nav-link">
-                <i className="bi bi-journal-bookmark"></i>
-                <span>Animal Tutorials</span>
+              <Link to="/googletutorial">
+                <ListItem>
+                  <ListItemPrefix>
+                    <BookOpenIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  Crop Tutorials
+                </ListItem>
               </Link>
-            </li>
-            <li className="nav-item">
-          <Link to="/dashboard/crops" className="nav-link">
-            <i className="bi bi-droplet"></i>
-            <span>Crops</span>
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/welcome" className="nav-link">
-            <i className="bi bi-arrow-left-circle"></i>
-            <span>Back</span>
-          </Link>
-        </li>
-          </>
-        )}
-        {(activeSection !== "crops" && activeSection !== "livestock")&&
-         (
-          <>
-          <li className="nav-item">
-          <Link to="/dashboard/livestock" className="nav-link">
-            <i className="bi bi-house-heart"></i>
-            <span>Animals</span>
-          </Link>
-        </li>
-<li className="nav-item">
-          <Link to="/dashboard/crops" className="nav-link">
-            <i className="bi bi-droplet"></i>
-            <span>Crops</span>
-          </Link>
-        </li>
-        </>
-         )}
-           
-      </ul>
-    </aside>
+              <Link to="/dashboard/livestock">
+                <ListItem>
+                  <ListItemPrefix>
+                    <i className="bi bi-house-heart text-lg"></i>
+                  </ListItemPrefix>
+                  Animals
+                </ListItem>
+              </Link>
+              <Link to="/welcome">
+                <ListItem>
+                  <ListItemPrefix>
+                    <ArrowLeftCircleIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  Back
+                </ListItem>
+              </Link>
+            </>
+          )}
+
+          {activeSection === "livestock" && (
+            <>
+              <Link to="/animals">
+                <ListItem>
+                  <ListItemPrefix>
+                    <i className="bi bi-journal-medical text-lg"></i>
+                  </ListItemPrefix>
+                  Livestock Records
+                </ListItem>
+              </Link>
+              <Link to="/googletutorial">
+                <ListItem>
+                  <ListItemPrefix>
+                    <BookOpenIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  Animal Tutorials
+                </ListItem>
+              </Link>
+              <Link to="/dashboard/crops">
+                <ListItem>
+                  <ListItemPrefix>
+                    <i className="bi bi-droplet text-lg"></i>
+                  </ListItemPrefix>
+                  Crops
+                </ListItem>
+              </Link>
+              <Link to="/welcome">
+                <ListItem>
+                  <ListItemPrefix>
+                    <ArrowLeftCircleIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  Back
+                </ListItem>
+              </Link>
+            </>
+          )}
+
+          {activeSection !== "crops" && activeSection !== "livestock" && (
+            <>
+              <Link to="/dashboard/livestock">
+                <ListItem>
+                  <ListItemPrefix>
+                    <i className="bi bi-house-heart text-lg"></i>
+                  </ListItemPrefix>
+                  Animals
+                </ListItem>
+              </Link>
+              <Link to="/dashboard/crops">
+                <ListItem>
+                  <ListItemPrefix>
+                    <i className="bi bi-droplet text-lg"></i>
+                  </ListItemPrefix>
+                  Crops
+                </ListItem>
+              </Link>
+            </>
+          )}
+        </List>
+        <ListItem onClick={handleLogout}>
+          <ListItemPrefix>
+            <PowerIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Log Out
+        </ListItem>
+      </Card>
+    </Drawer>
   );
 };
 

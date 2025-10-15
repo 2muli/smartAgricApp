@@ -68,7 +68,7 @@
     font-weight: bold;
     margin-bottom: 0px;
     color: black;
-  }
+     }
   
   .chat-box {
     flex: 1;
@@ -153,4 +153,3 @@
       width: 100%; /* ✅ stable width */
     }
   }
-  
