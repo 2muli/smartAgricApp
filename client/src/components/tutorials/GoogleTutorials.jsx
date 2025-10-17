@@ -10,7 +10,7 @@ import "./tutorial.css";
         if (!searchTerm) return;
     
         const query = encodeURIComponent(`${searchTerm} farming tutorial`);
-        const apiKey = import.meta.env.VITE_APP_GOOGLE_KEY;   //get API from https://console.cloud.google.com/apis/
+        const apiKey = process.env.REACT_APP_GOOGLE_KEY;
         const response = await fetch(
           `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&key=${apiKey}&maxResults=20&type=video`
         );

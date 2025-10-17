@@ -7,16 +7,16 @@ const WeatherForecast = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+const apiKey = import.meta.env.VITE_APP_WEATHER_KEY;
 
-  const apiKey = import.meta.env.VITE_APP_WEATHER_KEY;
+// Fetch 5-day weather forecast
+const fetchWeather = async (location) => {
+  if (!location) return;
 
-  // Fetch 5-day weather forecast
-  const fetchWeather = async (location) => {
-    if (!location) return;
+  setLoading(true);
+  setError("");
+  setWeatherData(null);
 
-    setLoading(true);
-    setError("");
-    setWeatherData(null);
 
     try {
       const response = await fetch(
